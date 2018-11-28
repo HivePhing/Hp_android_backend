@@ -126,6 +126,7 @@ class EntroapiController extends Controller
 
     //end first com reg form\
 
+
     //second first reg form
 
     public function company_register_form_second(Request $request)

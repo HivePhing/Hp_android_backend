@@ -71,6 +71,7 @@ Route::get('check_server',function(){
 
 });
 
+Route::get('token_store','FirebaseController@store_token');
 
 
 

@@ -80,7 +80,33 @@ class LoginController extends Controller
 
             } elseif ($company_data->status == 2) {
 //            return response()->json(['note' => 'third form']);
-                $reg_status = 'third form';
+                $user = DB::table('user_block')->where([['user_id', '=', JWTAuth::user()->id], ['circum', '=', 'block']]);
+
+                $no_user=DB::table('user_block')->where([['user_id', '=', JWTAuth::user()->id]]);
+                if($no_user->count()== 0){
+//                        return response()->json(['note'=>'block']);
+                    $reg_status = 'block';
+
+
+                }else {
+                    if ($company_data->count() > 0) {
+                        $check_second_data = $company_data->first()->investment;
+                        if (empty($check_second_data)) {
+                            $comtf = 'false';
+                        } else {
+                            $comtf = 'true';
+                        }
+                    } else {
+                        $comtf = 'false';
+                    }
+
+                    if ($user->count() > 0 and $comtf == 'true') {
+                        $reg_status = 'block';
+                    }else{
+                        $reg_status = 'done';
+
+                    }
+                }
 
 
             } else {
