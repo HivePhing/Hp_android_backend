@@ -18,11 +18,11 @@ class EntroapiController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => 'copy_photo_from_api']);
+//        $this->middleware('jwt.auth', ['except' => 'copy_photo_from_api']);
 //        $this->middleware('block');
 
         // $this->middleware('type', ['except' => ['other_company_detail','copy_photo_from_api']]);
-        $this->middleware('NeedToRegister', ['except' => ['company_register_form_first', 'copy_photo_from_api', 'company_register_form_second', 'company_register_form_third']]);
+//        $this->middleware('NeedToRegister', ['except' => ['company_register_form_first', 'copy_photo_from_api', 'company_register_form_second', 'company_register_form_third']]);
         // $this->middleware('Plans',['except'=>['company_detail','index','company_register_form','company_register_form_two','copy_photo_from_api','company_register_form_three','company_register','company_edit_form','company_edit']]);
     }
 
@@ -279,6 +279,23 @@ class EntroapiController extends Controller
                 return response()->json(['note' => 'Try again']);
             }
         }
+    }
+    public function check_server(){
+         $user = JWTAuth::parseToken()->check();
+         if($user){
+              $check_token='success';
+         }else{
+              $check_token='expired';
+         }
+        if($_GET['version'] == 1){
+            return response()->json(['status'=>true,'title'=>'Allow','link'=>'','message'=>'','positive_text'=>'','negative_text'=>'','token_life'=>$check_token]);
+
+        }
+        else{
+            return response()->json(['status'=>false,'title'=>'Need To Download New Version','link'=>'https://play.google.com/store/apps/details?id=com.facebook.katana','message'=>'New features','positive_text'=>'Download','negative_text'=>'Cancle','token_life'=>$check_token]);
+
+        }
+
     }
 
 

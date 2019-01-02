@@ -177,6 +177,36 @@ class ConstructprojectController extends Controller
         }
         $c_name = DB::table('cities')->where('id',$id)->first()->name;
         $data->city=$c_name;
+        //att2
+        $get_att1 = DB::connection('mysql_service')->table('attachment')->where([['project_id', '=', $data->id], ['position', '=', 1]]);
+        if ($get_att1->count() != 0) {
+            $data->file1 = $get_att1->first()->file_name;
+        } else {
+            $data->file1 = '';
+
+        }
+
+
+
+        //att3
+        $get_att3 = DB::connection('mysql_service')->table('attachment')->where([['project_id', '=', $data->id], ['position', '=', 3]]);
+        if ($get_att3->count() != 0) {
+            $data->file3 = $get_att3->first()->file_name;
+        } else {
+            $data->file3 = '';
+
+        }
+
+
+        //att2
+        $get_att2 = DB::connection('mysql_service')->table('attachment')->where([['project_id', '=', $data->id], ['position', '=', 2]]);
+        if ($get_att2->count() != 0) {
+            $data->file2 = $get_att2->first()->file_name;
+        } else {
+            $data->file2 = '';
+
+        }
+
 
         $com_data = DB::table('company')->where('user_id', '=', JWTAuth::user()->id)->first();
         $message_data = DB::connection('mysql_service')->table('message')->where([['post_id', '=', $id], ['com_id', '=', $com_data->id]])->orderBy('created_at', 'desc')->get();

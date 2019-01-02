@@ -59,17 +59,7 @@ Route::post('portfolio/edit/{id}', 'PortfolioController@edit');
 
 
 
-Route::get('check_server',function(){
-    if($_GET['version'] == 1){
-        return response()->json(['status'=>true,'title'=>'Allow','link'=>'','message'=>'','positive_text'=>'','negative_text'=>'']);
-
-    }
-    else{
-        return response()->json(['status'=>false,'title'=>'Need To Download New Version','link'=>'https://play.google.com/store/apps/details?id=com.facebook.katana','message'=>'New features','positive_text'=>'Download','negative_text'=>'Cancle']);
-
-    }
-
-});
+Route::get('check_server','EntroapiController@check_server');
 
 Route::get('token_store','FirebaseController@store_token');
 
